@@ -2,7 +2,8 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 
-var pat = require('./db/controlers/practice.js');
+//var pat = require('./db/controlers/practice.js');
+var  pat = require('./db/controlers/practice.js');
 
 var app = express();
 
@@ -26,13 +27,15 @@ router.get('/', function(req, res) {
 });
 
 
+//router.put('/createPractice', Practice.create);
+
 router.put('/createPractice', function (req, res) {
    
     //console.log("Req : %s", req)
     // First read existing users.
     var prtTitle = req.body.title;
     console.log("Titre de la pratique : %s", prtTitle);
-    var p = new pat.Practice ();
+    var p = new pat.Practice();
     p.create(req,res);
    // dahk.createPractice(prtTitle,1,null, true, 60);
 

@@ -48,4 +48,29 @@ GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA hpg TO hk;
 /* for test */
 INSERT INTO hpg.users (first_name, last_name) VALUES ('Generic User','Gen');
 
+
+INSERT INTO hpg.exercices (exercice_name_fr, exercice_name_eng, exercice_description_fr, exercice_descrription_eng, exercice_note, exercice_skills) 
+VALUES ('Exercice 1','Exercise 1','Allez','Go','Faire', 'Patin');
+
+INSERT INTO hpg.exercices (exercice_name_fr, exercice_name_eng, exercice_description_fr, exercice_descrription_eng, exercice_note, exercice_skills) 
+VALUES ('Exercice 2','Exercise 2','Allez','Go','Faire', 'Lancer');
+
+INSERT INTO hpg.exercices (exercice_name_fr, exercice_name_eng, exercice_description_fr, exercice_descrription_eng, exercice_note, exercice_skills) 
+VALUES ('Exercice 3','Exercise 3','Allez','Go','Faire', 'Feinte');
+
+INSERT INTO hpg.exercices (exercice_name_fr, exercice_name_eng, exercice_description_fr, exercice_descrription_eng, exercice_note, exercice_skills) 
+VALUES ('Exercice 4','Exercise 4','Allez','Go','Faire', 'Lancer');
+
+INSERT INTO hpg.exercices (exercice_name_fr, exercice_name_eng, exercice_description_fr, exercice_descrription_eng, exercice_note, exercice_skills) 
+VALUES ('Exercice 5','Exercise 5','Allez','Go','Faire', 'Patin');
+
+INSERT INTO hpg.exercices (exercice_name_fr, exercice_name_eng, exercice_description_fr, exercice_descrription_eng, exercice_note, exercice_skills) 
+VALUES ('Exercice 6','Exercise 6','Allez','Go','Faire', '1vs1');
+
+INSERT INTO hpg.exercices (exercice_name_fr, exercice_name_eng, exercice_description_fr, exercice_descrription_eng, exercice_note, exercice_skills) 
+VALUES ('Exercice 7','Exercise 7','Allez','Go','Faire', 'Lancer');
+
+INSERT INTO hpg.exercices (exercice_name_fr, exercice_name_eng, exercice_description_fr, exercice_descrription_eng, exercice_note, exercice_skills) 
+VALUES ('Exercice 8','Exercise 9','Allez','Go','Faire', 'Patin');
+
 COMMIT TRANSACTION;

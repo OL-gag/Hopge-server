@@ -1,39 +1,61 @@
-var pi = require('../models/PracticeInfo.js');
+var pi = require('../models/practiceInfo.js');
+var prtDet = require('../models/practiceDetails.js')
 
 class Practice
 {
     
     constructor(){
        this.prtInfo = new pi.PracticeInfo();
+       this.prtDet = new prtDet.PracticeDetails();
+       this.exercicesArray = [];
     }
 
-    create(req, res) {
+     create(req, res) {
     
-        console.log("*** pratice.js - create function **")
-    
-        const prtTitle = req.body.title;
-        const prtLenght = req.body.lenght;
-        const prtFullIce = req.body.fullIce;
-        const prtUserId = req.body.userId;
-        console.log("***  titre de la pratique **", prtTitle);
-        /*
-        this.prtInfo.CreatePracticeInfo(prtTitle,prtLenght,prtFullIce,prtUserId).then((value) => {
-            console.log("***  Retour insert **", value);
-        });    */       
-        this.prtInfo.CreatePracticeInfo(prtTitle,prtLenght,prtFullIce,prtUserId).then( (value) => this.selectExercices(value, prtLenght));
+       console.log("*** pratice.js - create function **");
+
+        const {
+            title,
+            lenght,
+            fullIce,
+            userId    
+            } = req.body;
+
+       
+        console.log("***  titre de la pratique **", title);
+        
+       this.prtInfo.CreatePracticeInfo(title,lenght,fullIce,userId).then( (value) => this.selectExercices(value, lenght));
        // console.log("***  Retour insert **", result);
-        //selectExercices();
+  
     
   }
   
-  selectExercices(practiceID, prtLenght)
-  {
-    console.log("***  selectExercices **", prtLenght);
-  }
+    selectExercices(practiceID, prtLenght)
+    {
+        console.log("***  selectExercices **", prtLenght);
+        const minPerExercice = 10;
+        const nbExercices = Math.floor(prtLenght/minPerExercice);
+        console.log("***  nbExercices **", nbExercices);
+        const availableExe = this.prtDet.getExercices();
+        for (let i=0; i<= nbExercices-1; i++)
+        {
+            
+          //  this.prtDet.pickExercices(practiceID, this.exercicesArray).then((value) => this.insertExercice(practiceID, value));
+        }     
+        
+        console.log("Exercices : ", this.exercicesArray);
+    }
+
+    insertExercice(practiceId, exerciceId)
+    {
+        this.exercicesArray.push(exerciceId);
+        console.log("insertExercice : ", this.exercicesArray);
+    }
 
 }
+
 module.exports = {
-    Practice,
+    Practice
   };
 //export default Practice;
 /*

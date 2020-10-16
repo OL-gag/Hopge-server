@@ -2,7 +2,8 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 
-var dal = require('./data-access-hk.js');
+//var pat = require('./db/controlers/practice.js');
+var  pat = require('./db/controlers/practice.js');
 
 var app = express();
 
@@ -26,15 +27,17 @@ router.get('/', function(req, res) {
 });
 
 
+//router.put('/createPractice', Practice.create);
+
 router.put('/createPractice', function (req, res) {
    
     //console.log("Req : %s", req)
     // First read existing users.
     var prtTitle = req.body.title;
     console.log("Titre de la pratique : %s", prtTitle);
-    
-    const dahk = new dal.dataAccesHK();
-    dahk.savePractice(prtTitle);
+    var p = new pat.Practice();
+    p.create(req,res);
+   // dahk.createPractice(prtTitle,1,null, true, 60);
 
     const message1 = {
         "API" : "/createPractice",
@@ -44,6 +47,8 @@ router.put('/createPractice', function (req, res) {
     res.json(message1);
    
 })
+
+//router.put('/api/v1/createPractice', Practice.create);
 
 app.use(cors()); //permet les appels localhost (a vérifier pour PROD)
 

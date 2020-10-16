@@ -1,5 +1,7 @@
 var pi = require('../models/practiceInfo.js');
-var prtDet = require('../models/practiceDetails.js')
+var prtDet = require('../models/practiceDetails.js');
+const {generateUniqueNumbers} = require('../../helpers/uniqueNumbers.js');
+
 
 class Practice
 {
@@ -24,7 +26,7 @@ class Practice
        
         console.log("***  titre de la pratique **", title);
         
-       this.prtInfo.CreatePracticeInfo(title,lenght,fullIce,userId).then( (value) => this.selectExercices(value, lenght));
+       this.prtInfo.CreatePracticeInfo(title,lenght,fullIce,userId).then( (value) => this.selectExercices(value[0].practice_id, lenght));
        // console.log("***  Retour insert **", result);
   
     
@@ -36,20 +38,19 @@ class Practice
         const minPerExercice = 10;
         const nbExercices = Math.floor(prtLenght/minPerExercice);
         console.log("***  nbExercices **", nbExercices);
-        const availableExe = this.prtDet.getExercices();
-        for (let i=0; i<= nbExercices-1; i++)
-        {
-            
-          //  this.prtDet.pickExercices(practiceID, this.exercicesArray).then((value) => this.insertExercice(practiceID, value));
-        }     
+        this.prtDet.getExercices().then((value) => {
+            this.exercicesArray = generateUniqueNumbers(nbExercices,value.length); // *** Should add more robust and sophisticated exercice selector.
+            this.insertExercice(practiceID);
+        })
+       
         
         console.log("Exercices : ", this.exercicesArray);
     }
 
-    insertExercice(practiceId, exerciceId)
+  
+    insertExercice(practiceId)
     {
-        this.exercicesArray.push(exerciceId);
-        console.log("insertExercice : ", this.exercicesArray);
+        this.prtDet.insert(practiceId, this.exercicesArray);
     }
 
 }

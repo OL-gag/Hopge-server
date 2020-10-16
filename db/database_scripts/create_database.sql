@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS hpg.exercices
 
 CREATE TABLE IF NOT EXISTS hpg.practiceDetails (
 	practice_det_id SERIAL PRIMARY KEY,
-	pratice_id SERIAL REFERENCES hpg.practiceInfo(practice_id),
+	practice_id SERIAL REFERENCES hpg.practiceInfo(practice_id),
 	exercice_id SERIAL REFERENCES hpg.exercices(exercice_id)
 );
 

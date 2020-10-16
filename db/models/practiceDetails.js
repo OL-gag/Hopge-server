@@ -46,10 +46,33 @@ class PracticeDetails
         return rows;
 
 
-    }
+    };
     
-    insert()
-    {
+    async insert(practiceId, listNoExerciceId)
+    { 
+        let j = 0;
+        var insertClause = 'Insert INTO hpg.practiceDetails (practice_id, exercice_id) VALUES ';
+        var values = [];
+        for(let i = 0; i <= listNoExerciceId.length-1; i++)
+        {
+            insertClause += '($' + ++j + ', $'+ ++j + ')';
+            if ( i != listNoExerciceId.length-1)
+            {
+                insertClause += ', '
+            }
+            values.push(practiceId);
+            values.push(listNoExerciceId[i]);
+        }
+        insertClause += ';';
+
+        
+        console.log(insertClause);
+        await db.query(insertClause,values);
+        /*
+        { text:
+            'INSERT INTO "users" ("email", "name") VALUES ($1, $2), ($3, $4) RETURNING "id"',
+           values: [ 'test@example.com', 'Fred', 'test2@example.com', 'Lynda' ] }  */
+
 
     }
 

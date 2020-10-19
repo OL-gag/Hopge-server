@@ -1,4 +1,6 @@
 var db = require('../dev/dbQuery.js');
+var ExerciceEntity = require('../entities/ExerciceEntity.js');
+//var ExeEntity = require('../entities/ExerciceEntity.js');
 
 class PracticeDetails
 {
@@ -6,47 +8,30 @@ class PracticeDetails
         this.practice_id = -1;
     };
 
-    async pickExercices(practiceId, existingExercice)
+
+    async getPracticeDetails(practiceId)
     {
-        console.log("*** models/PracticeDetails.js - pickExercices function **");
+        console.log("*** models/PracticeDetails.js - getPracticeDetails function **");
         
-
         var text = `
-            SELECT exercice_id FROM hpg.exercices ORDER BY exercice_id ASC    
-            WHERE exercice_id not in ($1)
-            LIMIT 1;
-            `;
-        if ( existingExercice != null)
-        {
-            text = `
-            SELECT exercice_id FROM hpg.exercices ORDER BY exercice_id ASC    
-            LIMIT 1;
-            `;
-
-        }
-        const values = existingExercice;
-        
-        const { rows } = await db.query(text,values);
-        console.log("*** models/PracticeDetails.js - result **", rows);
-        return rows;
-    };
-
-    async getExercices()
-    {
-        console.log("*** models/PracticeDetails.js - getExercices function **");
-        
-
-        var text = `
-            SELECT * FROM hpg.exercices ORDER BY exercice_id;
+            SELECT * FROM hpg.practiceDetails
+            WHERE practice_id = $1;
             `;
        
-        
-        const { rows } = await db.query(text);
-        console.log("*** models/getExercices.js - result **", rows);
-        return rows;
+        var values = [practiceId];
+     
+        const { rows } = await db.query(text, values);
 
+        var exercices = rows.map(this.copyElement)
 
+        console.log("*** models/getExercices.js - result **", exercices);
+        return exercices;
     };
+
+    copyElement(exercice)
+    {
+        return exercice.exercice_id;        
+    }
     
     async insert(practiceId, listNoExerciceId)
     { 

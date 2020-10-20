@@ -1,6 +1,5 @@
 var pool = require('./pool.js');
 
-
 //const { pool } = require('./pool')
 pool.on('connect', () => {
   console.log('connected to the db');
@@ -15,6 +14,7 @@ pool.on('connect', () => {
  */
 const createUserTable = () => {
 
+  console.log("in createUserTable");
    const userCreateQuery = `CREATE TABLE IF NOT EXISTS hpg.users
   (user_id  SERIAL PRIMARY KEY, 
   email VARCHAR(100) UNIQUE NOT NULL, 
@@ -25,11 +25,12 @@ const createUserTable = () => {
 
   pool.query(userCreateQuery)
     .then((res) => {
-      console.log(res);
+      console.log("res query 1", res);
       pool.end();
+      console.log("END res query 1", res);
     })
     .catch((err) => {
-      console.log(err);
+      console.log("ereur query 1", err);
       pool.end();
     });
 };
@@ -110,6 +111,7 @@ const createPracticeDetailsTable = () => {
  * Drop User Table
  */
 const dropUserTable = () => {
+  console.log("**DROP USER");
   const usersDropQuery = 'DROP TABLE IF EXISTS hpg.users CASCADE';
   pool.query(usersDropQuery)
     .then((res) => {
@@ -190,16 +192,17 @@ const dropAllTables = () => {
  // dropPracticeDetailsTable();
  // dropExercicesTable();
  // dropPracticeInfoTable();
+  console.log("**dropAllTables");
   dropUserTable();
 };
 
 pool.on('remove', () => {
-  console.log('client removed');
+  console.log('client removed 1');
   process.exit(0);
 });
 
 
-Module.exports = {
+module.exports  = {
   createAllTables,
   dropAllTables
 };

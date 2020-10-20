@@ -1,20 +1,23 @@
-var pi = require('../models/practiceInfo.js');
-var prtDet = require('../models/practiceDetails.js');
+var practiceInfo = require('../models/practiceInfo.js');
+var practiceDetails = require('../models/practiceDetails.js');
+var exercices = require('../models/exercices.js')
 const {generateUniqueNumbers} = require('../../helpers/uniqueNumbers.js');
 
 
-class Practice
+const Practice = 
 {
     
-    constructor(){
-       this.prtInfo = new pi.PracticeInfo();
-       this.prtDet = new prtDet.PracticeDetails();
-       this.exercicesArray = [];
-    }
+   /* constructor(){
+       this.prtInfo = new practiceInfo.PracticeInfo();
+       this.prtDet = new practiceDetails.PracticeDetails();
+       this.prtExer = new exercices.Exercices();
 
-     create(req, res) {
+       this.exercicesArray = [];
+    }*/
+
+    async createPractice(req, res) {
     
-       console.log("*** pratice.js - create function **");
+        console.log("*** pratice.js - create function **");
 
         const {
             title,
@@ -23,34 +26,46 @@ class Practice
             userId    
             } = req.body;
 
-       
+
         console.log("***  titre de la pratique **", title);
-        
-       this.prtInfo.CreatePracticeInfo(title,lenght,fullIce,userId).then( (value) => this.selectExercices(value[0].practice_id, lenght));
-       // console.log("***  Retour insert **", result);
-  
-    
-  }
-  
-    selectExercices(practiceID, prtLenght)
+
+        var prtInfo = new practiceInfo.PracticeInfo();
+        var result =  await prtInfo.CreatePracticeInfo(title,lenght,fullIce,userId);
+        var practiceId = result[0].practice_id;
+        //selectExercices(result[0].practice_id, lenght);
+        SelectExercicesF(lenght, practiceId);
+          
+        //console.log("Exercices : ", this.exercicesArray);
+        res.json("completed");
+    },        
+
+  /*  async selectExercices(practiceId, prtLenght)
     {
         console.log("***  selectExercices **", prtLenght);
         const minPerExercice = 10;
         const nbExercices = Math.floor(prtLenght/minPerExercice);
         console.log("***  nbExercices **", nbExercices);
-        this.prtDet.getExercices().then((value) => {
+        this.prtExer.getAllExercices().then((value) => {
             this.exercicesArray = generateUniqueNumbers(nbExercices,value.length); // *** Should add more robust and sophisticated exercice selector.
-            this.insertExercice(practiceID);
+            this.prtDet.insert(practiceId, this.exercicesArray);
         })
-       
-        
+          
         console.log("Exercices : ", this.exercicesArray);
-    }
+    },
+*/
 
-  
-    insertExercice(practiceId)
-    {
-        this.prtDet.insert(practiceId, this.exercicesArray);
+    async getPratice(req, res) {
+        
+        var pd = new practiceDetails.PracticeDetails();
+        var  x = await pd.getPracticeDetails(req.body.practice_id);
+        
+        var ex = new exercices.Exercices();
+        var y = await ex.getAllExercices(x);
+
+        res.json(y);
+        
+        //return x;
+        
     }
 
 }
@@ -58,6 +73,19 @@ class Practice
 module.exports = {
     Practice
   };
+
+function SelectExercicesF(lenght, practiceId) {
+    console.log("***  selectExercices **", lenght);
+    const minPerExercice = 10;
+    const nbExercices = Math.floor(lenght / minPerExercice);
+    console.log("***  nbExercices **", nbExercices);
+    var exer = new exercices.Exercices();
+    exer.getAllExercices().then((value) => {
+        var exercicesArray = generateUniqueNumbers(nbExercices, value.length); // *** Should add more robust and sophisticated exercice selector.
+        var prtDet = new practiceDetails.PracticeDetails();
+        prtDet.insert(practiceId, exercicesArray);
+    });
+}
 //export default Practice;
 /*
 

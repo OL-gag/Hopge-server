@@ -28,25 +28,27 @@ router.get('/', function(req, res) {
 
 
 //router.put('/createPractice', Practice.create);
+router.get('/getPractice', pat.Practice.getPratice ); 
+router.put('/createPractice', pat.Practice.createPractice ); 
 
-router.put('/createPractice', function (req, res) {
-   
-    //console.log("Req : %s", req)
-    // First read existing users.
-    var prtTitle = req.body.title;
-    console.log("Titre de la pratique : %s", prtTitle);
+
+/*router.get('/getPractice', function (req, res){
+    
+    var prtPracticeId = req.body.practice_id;
+    console.log("Numéro de la pratique : %s", prtPracticeId);
     var p = new pat.Practice();
-    p.create(req,res);
-   // dahk.createPractice(prtTitle,1,null, true, 60);
+    var x = p.getExercices(prtPracticeId) /*.then((value) => {
 
-    const message1 = {
-        "API" : "/createPractice",
-        "Titre" : prtTitle
-    };
+        console.log("*** HERE ****", value);
+        res.json(value);
+    })
+    res.json(x);
+    res.json("erreur");   
 
-    res.json(message1);
-   
-})
+});
+*/
+
+
 
 //router.put('/api/v1/createPractice', Practice.create);
 

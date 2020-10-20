@@ -9,14 +9,16 @@ const pool = new Pool.Pool(databaseConfig);
 exports.query = function(quertText, params) 
 {
     return pool.query(quertText,params);
-}
+},
 
-exports.on = function()
+exports.on = function(event, listener)
 {
-    return pool.on;
-}
+    console.log("in pool.on : ", event.name);
+    pool.on(event, listener);
+},
 
 exports.end = function() 
 {
-    return pool.end();
+    //pool.end();
+    console.log("END exports.end = function()  ", databaseConfig);
 }

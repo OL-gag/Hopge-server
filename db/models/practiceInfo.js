@@ -6,17 +6,17 @@ class PracticeInfo
         this.practice_id = -1;
     };
 
-    async CreatePracticeInfo(title, lenght, fullice, userId)
+    async CreatePracticeInfo(title, length, fullice, userId)
     {
         console.log("*** models/praticeInfo.js - CreatePracticeInfo function **");
         const text = `
             INSERT INTO hpg.practiceinfo (title, lenght, fullice, user_id)
-            VALUES ($1, $2, $3, $4) RETURNING practice_id;
+            VALUES ($1, $2, $3, $4)  RETURNING practice_id;
             `;
 
         const values = [
             title,
-            lenght,
+            length,
             fullice,
             userId
         ];

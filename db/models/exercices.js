@@ -23,8 +23,9 @@ class Exercices
         return rows;
     }
 
-    async getAllExercices(listId)
+    async getListExercices(listId)
     {
+        console.log("**** getAllExercices " + listId);
         var text = `
         SELECT * FROM hpg.exercices
         WHERE exercice_id in (`;

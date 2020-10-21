@@ -2,7 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 
-//var pat = require('./db/controlers/practice.js');
+
 var  pat = require('./db/controlers/practice.js');
 
 var app = express();
@@ -14,6 +14,7 @@ var app = express();
 }));
 app.use(bodyParser.json());
 
+//app.use(expressValidator());
 // Use environment defined port or 3000
 var port = process.env.PORT || 3000;
 
@@ -28,36 +29,14 @@ router.get('/', function(req, res) {
 
 
 //router.put('/createPractice', Practice.create);
-router.get('/getPractice', pat.Practice.getPratice ); 
-router.put('/createPractice', pat.Practice.createPractice ); 
-
-
-/*router.get('/getPractice', function (req, res){
-    
-    var prtPracticeId = req.body.practice_id;
-    console.log("Numéro de la pratique : %s", prtPracticeId);
-    var p = new pat.Practice();
-    var x = p.getExercices(prtPracticeId) /*.then((value) => {
-
-        console.log("*** HERE ****", value);
-        res.json(value);
-    })
-    res.json(x);
-    res.json("erreur");   
-
-});
-*/
-
-
-
-//router.put('/api/v1/createPractice', Practice.create);
+router.get('/getPractice', pat.Practice.validate('getPractice'), pat.Practice.getPractice ); 
+router.put('/createPractice', pat.Practice.validate('createPractice'), pat.Practice.createPractice ); 
 
 app.use(cors()); //permet les appels localhost (a vérifier pour PROD)
 
 // Register all our routes with /api
 app.use('/api', router);
 
-
 // Start the server
 app.listen(port);
-console.log('HK Server is running on port ' + port);
+console.log('HopeGe Server is running on port ' + port);

@@ -1,8 +1,9 @@
 var practiceInfo = require('../models/practiceInfo.js');
 var practiceDetails = require('../models/practiceDetails.js');
-var exercices = require('../models/exercices.js')
+var exercices = require('../models/exercices.js');
+//const { body } = require('express-validator');
 const {generateUniqueNumbers} = require('../../helpers/uniqueNumbers.js');
-
+const { body, validationResult } = require('express-validator');
 
 const Practice = 
 {
@@ -18,10 +19,15 @@ const Practice =
     async createPractice(req, res) {
     
         console.log("*** pratice.js - create function **");
+          // Finds the validation errors in this request and wraps them in an object with handy functions
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
 
         const {
             title,
-            lenght,
+            length,
             fullIce,
             userId    
             } = req.body;
@@ -29,43 +35,60 @@ const Practice =
 
         console.log("***  titre de la pratique **", title);
 
+        
         var prtInfo = new practiceInfo.PracticeInfo();
-        var result =  await prtInfo.CreatePracticeInfo(title,lenght,fullIce,userId);
+        var result =  await prtInfo.CreatePracticeInfo(title,length,fullIce,userId);
+        if ( result.length == 0)
+        {
+            return res.status(400).json({ errors: "Unable to create new practice" });
+        }        
         var practiceId = result[0].practice_id;
         //selectExercices(result[0].practice_id, lenght);
-        SelectExercicesF(lenght, practiceId);
+        SelectExercicesF(length, practiceId);
           
         //console.log("Exercices : ", this.exercicesArray);
-        res.json("completed");
-    },        
-
-  /*  async selectExercices(practiceId, prtLenght)
-    {
-        console.log("***  selectExercices **", prtLenght);
-        const minPerExercice = 10;
-        const nbExercices = Math.floor(prtLenght/minPerExercice);
-        console.log("***  nbExercices **", nbExercices);
-        this.prtExer.getAllExercices().then((value) => {
-            this.exercicesArray = generateUniqueNumbers(nbExercices,value.length); // *** Should add more robust and sophisticated exercice selector.
-            this.prtDet.insert(practiceId, this.exercicesArray);
-        })
-          
-        console.log("Exercices : ", this.exercicesArray);
+        res.status(200).json(result[0]);
+    },      
+    
+   
+    validate(method)  {
+        switch (method) {
+            case 'createPractice': {
+            return [ 
+                body("title", "title doesn't exists").exists(),
+                body("length", "Practice Length is mandatory").exists(),
+                body("userId", "UserId is mandatory").exists()
+            ]   
+            }
+            case 'getPractice' : {
+            return [
+                body("practiceId", "practiceId is mandatory").exists()
+            ]
+                }
+        }
     },
-*/
 
-    async getPratice(req, res) {
+    async getPractice(req, res) {
         
-        var pd = new practiceDetails.PracticeDetails();
-        var  x = await pd.getPracticeDetails(req.body.practice_id);
-        
-        var ex = new exercices.Exercices();
-        var y = await ex.getAllExercices(x);
+        // Finds the validation errors in this request and wraps them in an object with handy functions
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
 
-        res.json(y);
-        
-        //return x;
-        
+        var ptrDet = new practiceDetails.PracticeDetails();
+        ptrDet.getPracticeDetails(req.body.practiceId).then(lstExerciceId => {
+            
+            if ( lstExerciceId.length == 0) 
+            {
+                throw "Unable to find new practice";
+            }
+            var exer = new exercices.Exercices();
+            exer.getListExercices(lstExerciceId).then(lstExercicesDet =>
+                {
+                    res.json(lstExercicesDet);
+                })         
+        }).catch(errors => res.status(400).json({errors}));       
     }
 
 }
@@ -86,69 +109,3 @@ function SelectExercicesF(lenght, practiceId) {
         prtDet.insert(practiceId, exercicesArray);
     });
 }
-//export default Practice;
-/*
-
-    createPractice(title, userid, skillist, fullice, lenght)
-    {      
-        // create practice info
-        var result = this.createPracticeInfo(title, lenght, fullice, userid);
-        var myid = 1;//result.rows[0];
-        // pick exercice from list
-        
-
-        console.log("data save : % ", result);
-    }
-
-    createPracticeInfo(title, lenght, fullice, userId)
-    {
-        const query = `
-        INSERT INTO hpg.practiceinfo (title, lenght, fullice, user_id)
-        VALUES ('${title}', ${lenght}, ${fullice}, ${userId}) RETURNING practice_id;
-        `;
-
-        var t = this.executeQuery(query);
-        console.log("t", t);
-        return t;
-    }
-
-    selectExercice()
-    {
-
-    }
-
-
-    executeQuery(qr)
-    {
-        this.client.connect();
-        var result = null;
-        var result = this.client.query(qr, (err, res) => {
-            if (err) {
-                console.error(err);
-                this.client.end();
-                
-            }
-            //res.send(res.rows[0]);
-            console.log('Query ran :', qr);
-            console.log('Query result :', res.rows[0]);
-            //this.client.end();
-            return res.rows[0];            
-        });
-        //console.log('Query result 2:', result);
-        
-        
-        
-
-    }
-
-}
-
-
-
-
-
-
-
-module.exports = {
-    dataAccesHK,
-  };*/

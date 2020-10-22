@@ -1,3 +1,4 @@
+const { isDate } = require('moment');
 var db = require('../dev/dbQuery.js');
 var ExerciceEntity = require('../entities/ExerciceEntity.js');
 //var ExeEntity = require('../entities/ExerciceEntity.js');
@@ -9,7 +10,7 @@ class PracticeDetails
     };
 
 
-    async getPracticeDetails(practiceId)
+    async getPracticeDetails(practiceId, url)
     {
         console.log("*** models/PracticeDetails.js - getPracticeDetails function **");
         
@@ -22,21 +23,29 @@ class PracticeDetails
      
         const { rows } = await db.query(text, values);
 
-        var exercices = rows.map(this.copyElement)
-
-        console.log("*** models/getExercices.js - result **", exercices);
-        return exercices;
+        if ( url )
+        {
+            return rows.map(this.copyElementUrl)
+        }
+              
+        return rows.map(this.copyElementId);
+       
     };
 
-    copyElement(exercice)
+    copyElementUrl(drill)
     {
-        return exercice.exercice_id;        
+        return process.env.SERVER_URL + "getDrill/" + drill.drill_id;                        
+    }
+
+    copyElementId(drill)
+    {
+        return drill.drill_id;                        
     }
     
     async insert(practiceId, listNoExerciceId)
     { 
         let j = 0;
-        var insertClause = 'Insert INTO hpg.practiceDetails (practice_id, exercice_id) VALUES ';
+        var insertClause = 'Insert INTO hpg.practiceDetails (practice_id, drill_id) VALUES ';
         var values = [];
         for(let i = 0; i <= listNoExerciceId.length-1; i++)
         {

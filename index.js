@@ -29,8 +29,12 @@ router.get('/', function(req, res) {
 
 
 //router.put('/createPractice', Practice.create);
-router.get('/getPractice', pat.Practice.validate('getPractice'), pat.Practice.getPractice ); 
 router.put('/createPractice', pat.Practice.validate('createPractice'), pat.Practice.createPractice ); 
+
+router.get('/getPracticeDrills', pat.Practice.validate('getPracticeDrills'), pat.Practice.getPracticeDrills );
+router.get('/getPracticeDetails/:id', pat.Practice.getPracticeDetails ); 
+router.get('/getDrill/:id', pat.Practice.getDrill );  
+
 
 app.use(cors()); //permet les appels localhost (a vérifier pour PROD)
 

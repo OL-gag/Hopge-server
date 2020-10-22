@@ -1,6 +1,6 @@
 var practiceInfo = require('../models/practiceInfo.js');
 var practiceDetails = require('../models/practiceDetails.js');
-var exercices = require('../models/exercices.js');
+var drills = require('../models/drill.js');
 //const { body } = require('express-validator');
 const {generateUniqueNumbers} = require('../../helpers/uniqueNumbers.js');
 const { body, validationResult } = require('express-validator');
@@ -8,14 +8,6 @@ const { body, validationResult } = require('express-validator');
 const Practice = 
 {
     
-   /* constructor(){
-       this.prtInfo = new practiceInfo.PracticeInfo();
-       this.prtDet = new practiceDetails.PracticeDetails();
-       this.prtExer = new exercices.Exercices();
-
-       this.exercicesArray = [];
-    }*/
-
     async createPractice(req, res) {
     
         console.log("*** pratice.js - create function **");
@@ -29,6 +21,8 @@ const Practice =
             title,
             length,
             fullIce,
+            startDateTime,
+            endDateTime,
             userId    
             } = req.body;
 
@@ -37,16 +31,16 @@ const Practice =
 
         
         var prtInfo = new practiceInfo.PracticeInfo();
-        var result =  await prtInfo.CreatePracticeInfo(title,length,fullIce,userId);
+        var result =  await prtInfo.CreatePracticeInfo(title,length,fullIce,userId, startDateTime, endDateTime);
         if ( result.length == 0)
         {
             return res.status(400).json({ errors: "Unable to create new practice" });
         }        
         var practiceId = result[0].practice_id;
-        //selectExercices(result[0].practice_id, lenght);
-        SelectExercicesF(length, practiceId);
+        //selectDrills(result[0].practice_id, lenght);
+        SelectDrillsF(length, practiceId);
           
-        //console.log("Exercices : ", this.exercicesArray);
+        //console.log("Drills : ", this.drillsArray);
         res.status(200).json(result[0]);
     },      
     
@@ -60,7 +54,7 @@ const Practice =
                 body("userId", "UserId is mandatory").exists()
             ]   
             }
-            case 'getPractice' : {
+            case 'getPracticeDrills' : {
             return [
                 body("practiceId", "practiceId is mandatory").exists()
             ]
@@ -68,7 +62,16 @@ const Practice =
         }
     },
 
-    async getPractice(req, res) {
+    async getPracticeDetails(req, res) {
+        var PracticeId = req.params.id;
+        var ptrDet = new practiceDetails.PracticeDetails();
+        drillUrls =  await ptrDet.getPracticeDetails(PracticeId, true);
+
+        return res.json(drillUrls);
+
+    },
+
+    async getPracticeDrills(req, res) {
         
         // Finds the validation errors in this request and wraps them in an object with handy functions
         const errors = validationResult(req);
@@ -77,18 +80,32 @@ const Practice =
         }
 
         var ptrDet = new practiceDetails.PracticeDetails();
-        ptrDet.getPracticeDetails(req.body.practiceId).then(lstExerciceId => {
+        ptrDet.getPracticeDetails(req.body.practiceId, false).then(lstDrillId => {
             
-            if ( lstExerciceId.length == 0) 
+            if ( lstDrillId.length == 0) 
             {
                 throw "Unable to find new practice";
             }
-            var exer = new exercices.Exercices();
-            exer.getListExercices(lstExerciceId).then(lstExercicesDet =>
+            var exer = new drills.Drills();
+            exer.getListDrills(lstDrillId).then(lstDrillsDet =>
                 {
-                    res.json(lstExercicesDet);
+                    res.json(lstDrillsDet);
                 })         
         }).catch(errors => res.status(400).json({errors}));       
+    },
+
+    async getDrill(req, res) {
+        var exer = new drills.Drills();
+        var id = req.params.id;
+        if ( id > 0)
+        {
+            drillDetails = await exer.getDrill(id);
+            res.json(drillDetails);
+        }
+        else
+        {
+            res.status(400).json({ errors: "Unable to find new drill" });
+        }
     }
 
 }
@@ -97,15 +114,15 @@ module.exports = {
     Practice
   };
 
-function SelectExercicesF(lenght, practiceId) {
-    console.log("***  selectExercices **", lenght);
-    const minPerExercice = 10;
-    const nbExercices = Math.floor(lenght / minPerExercice);
-    console.log("***  nbExercices **", nbExercices);
-    var exer = new exercices.Exercices();
-    exer.getAllExercices().then((value) => {
-        var exercicesArray = generateUniqueNumbers(nbExercices, value.length); // *** Should add more robust and sophisticated exercice selector.
+function SelectDrillsF(lenght, practiceId) {
+    console.log("***  selectDrills **", lenght);
+    const minPerDrill = 10;
+    const nbDrills = Math.floor(lenght / minPerDrill);
+    console.log("***  nbDrills **", nbDrills);
+    var exer = new drills.Drills();
+    exer.getAllDrills().then((value) => {
+        var drillsArray = generateUniqueNumbers(nbDrills, value.length); // *** Should add more robust and sophisticated drill selector.
         var prtDet = new practiceDetails.PracticeDetails();
-        prtDet.insert(practiceId, exercicesArray);
+        prtDet.insert(practiceId, drillsArray);
     });
 }

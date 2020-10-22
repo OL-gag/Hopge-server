@@ -7,7 +7,7 @@ BEGIN TRANSACTION;
 CREATE SCHEMA IF NOT EXISTS hpg;
 
 -- CREATE TABLES ---
-DROP TABLE IF EXISTS hpg.users, hpg.exercices, hpg.practiceInfo, hpg.practiceDetails  CASCADE;
+DROP TABLE IF EXISTS hpg.users, hpg.drills, hpg.practiceInfo, hpg.practiceDetails  CASCADE;
 
 CREATE TABLE IF NOT EXISTS  hpg.users (
 	user_id     SERIAL PRIMARY KEY,
@@ -22,25 +22,28 @@ CREATE TABLE IF NOT EXISTS hpg.practiceInfo (
 	title VARCHAR(50),
 	lenght smallint NULL,
 	fullIce boolean,
+	startDtm TIMESTAMP, 
+	endDtm TIMESTAMP, 
+	creationDtm TIMESTAMP,
 	user_id SERIAL REFERENCES hpg.users(user_id)
 );
 
-CREATE TABLE IF NOT EXISTS hpg.exercices
+CREATE TABLE IF NOT EXISTS hpg.drills
 (
-	exercice_id SERIAL PRIMARY KEY,
-	exercice_name_fr varchar(75),
-	exercice_name_eng varchar(75),
-	exercice_description_fr varchar(2000),
-	exercice_descrription_eng varchar(2000),
-	exercice_note varchar(2000),
-	exercice_picture BYTEA,
-	exercice_skills varchar(200)
+	drill_id SERIAL PRIMARY KEY,
+	drill_name_fr varchar(75),
+	drill_name_eng varchar(75),
+	drill_description_fr varchar(2000),
+	drill_descrription_eng varchar(2000),
+	drill_note varchar(2000),
+	drill_picture BYTEA,
+	drill_skills varchar(200)
 );
 
 CREATE TABLE IF NOT EXISTS hpg.practiceDetails (
 	practice_det_id SERIAL PRIMARY KEY,
 	practice_id SERIAL REFERENCES hpg.practiceInfo(practice_id),
-	exercice_id SERIAL REFERENCES hpg.exercices(exercice_id)
+	drill_id SERIAL REFERENCES hpg.drills(drill_id)
 );
 
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA hpg TO hk;
@@ -49,28 +52,28 @@ GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA hpg TO hk;
 INSERT INTO hpg.users (first_name, last_name) VALUES ('Generic User','Gen');
 
 
-INSERT INTO hpg.exercices (exercice_name_fr, exercice_name_eng, exercice_description_fr, exercice_descrription_eng, exercice_note, exercice_skills) 
-VALUES ('Exercice 1','Exercise 1','Allez','Go','Faire', 'Patin');
+INSERT INTO hpg.drills (drill_name_fr, drill_name_eng, drill_description_fr, drill_descrription_eng, drill_note, drill_skills) 
+VALUES ('Exercice 1','Drill 1','Allez','Go','Faire', 'Patin');
 
-INSERT INTO hpg.exercices (exercice_name_fr, exercice_name_eng, exercice_description_fr, exercice_descrription_eng, exercice_note, exercice_skills) 
-VALUES ('Exercice 2','Exercise 2','Allez','Go','Faire', 'Lancer');
+INSERT INTO hpg.drills (drill_name_fr, drill_name_eng, drill_description_fr, drill_descrription_eng, drill_note, drill_skills) 
+VALUES ('Exercice 2','Drill 2','Allez','Go','Faire', 'Lancer');
 
-INSERT INTO hpg.exercices (exercice_name_fr, exercice_name_eng, exercice_description_fr, exercice_descrription_eng, exercice_note, exercice_skills) 
-VALUES ('Exercice 3','Exercise 3','Allez','Go','Faire', 'Feinte');
+INSERT INTO hpg.drills (drill_name_fr, drill_name_eng, drill_description_fr, drill_descrription_eng, drill_note, drill_skills) 
+VALUES ('Exercice 3','Drill 3','Allez','Go','Faire', 'Feinte');
 
-INSERT INTO hpg.exercices (exercice_name_fr, exercice_name_eng, exercice_description_fr, exercice_descrription_eng, exercice_note, exercice_skills) 
-VALUES ('Exercice 4','Exercise 4','Allez','Go','Faire', 'Lancer');
+INSERT INTO hpg.drills (drill_name_fr, drill_name_eng, drill_description_fr, drill_descrription_eng, drill_note, drill_skills) 
+VALUES ('Exercice 4','Drill 4','Allez','Go','Faire', 'Lancer');
 
-INSERT INTO hpg.exercices (exercice_name_fr, exercice_name_eng, exercice_description_fr, exercice_descrription_eng, exercice_note, exercice_skills) 
-VALUES ('Exercice 5','Exercise 5','Allez','Go','Faire', 'Patin');
+INSERT INTO hpg.drills (drill_name_fr, drill_name_eng, drill_description_fr, drill_descrription_eng, drill_note, drill_skills) 
+VALUES ('Exercice 5','Drill 5','Allez','Go','Faire', 'Patin');
 
-INSERT INTO hpg.exercices (exercice_name_fr, exercice_name_eng, exercice_description_fr, exercice_descrription_eng, exercice_note, exercice_skills) 
-VALUES ('Exercice 6','Exercise 6','Allez','Go','Faire', '1vs1');
+INSERT INTO hpg.drills (drill_name_fr, drill_name_eng, drill_description_fr, drill_descrription_eng, drill_note, drill_skills) 
+VALUES ('Exercice 6','Drill 6','Allez','Go','Faire', '1vs1');
 
-INSERT INTO hpg.exercices (exercice_name_fr, exercice_name_eng, exercice_description_fr, exercice_descrription_eng, exercice_note, exercice_skills) 
-VALUES ('Exercice 7','Exercise 7','Allez','Go','Faire', 'Lancer');
+INSERT INTO hpg.drills (drill_name_fr, drill_name_eng, drill_description_fr, drill_descrription_eng, drill_note, drill_skills) 
+VALUES ('Exercice 7','Drill 7','Allez','Go','Faire', 'Lancer');
 
-INSERT INTO hpg.exercices (exercice_name_fr, exercice_name_eng, exercice_description_fr, exercice_descrription_eng, exercice_note, exercice_skills) 
+INSERT INTO hpg.drills (drill_name_fr, drill_name_eng, drill_description_fr, drill_descrription_eng, drill_note, drill_skills) 
 VALUES ('Exercice 8','Exercise 9','Allez','Go','Faire', 'Patin');
 
 COMMIT TRANSACTION;

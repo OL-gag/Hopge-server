@@ -10,8 +10,7 @@ class PracticeInfo
     {
         console.log("*** models/praticeInfo.js - CreatePracticeInfo function **");
         let ts = Date.now();
-
-        let date_ob = new Date(ts);
+        
         if ( startDateTime == null )
         {
             startDateTime = new Date(ts);
@@ -39,12 +38,36 @@ class PracticeInfo
         ];
         
         const { rows } = await db.query(text,values);
-        
+      
+       
         /*.then((value) => {
             this.practice_id = value.rows[0].practice_id;
             resolve(value.rows[0].practice_id);
         });
         */
+        return rows;
+     }
+
+     convertIdUrl(pInfo)
+     {
+        pInfo.drillsRef =   process.env.SERVER_URL + "practices/" + pInfo.practice_id + "/drills"  
+        return pInfo;
+     }
+
+     async GetPracticesForUser(userId)
+     {
+          const text = `
+                SELECT * FROM hpg.practiceinfo WHERE user_id = $1;
+            `;
+
+        const values = [
+            userId
+        ];
+        
+        const { rows } = await db.query(text,values);
+
+        rows.map(this.convertIdUrl)
+
         return rows;
      }
 }

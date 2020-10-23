@@ -1,7 +1,6 @@
 const { isDate } = require('moment');
 var db = require('../dev/dbQuery.js');
-var ExerciceEntity = require('../entities/ExerciceEntity.js');
-//var ExeEntity = require('../entities/ExerciceEntity.js');
+
 
 class PracticeDetails
 {
@@ -34,7 +33,7 @@ class PracticeDetails
 
     copyElementUrl(drill)
     {
-        return process.env.SERVER_URL + "getDrill/" + drill.drill_id;                        
+        return process.env.SERVER_URL + "drills/" + drill.drill_id;                        
     }
 
     copyElementId(drill)

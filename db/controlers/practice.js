@@ -3,7 +3,7 @@ var practiceDetails = require('../models/practiceDetails.js');
 var drills = require('../models/drill.js');
 //const { body } = require('express-validator');
 const {generateUniqueNumbers} = require('../../helpers/uniqueNumbers.js');
-const { body, validationResult } = require('express-validator');
+const { body, param, validationResult } = require('express-validator');
 
 const Practice = 
 {
@@ -59,16 +59,41 @@ const Practice =
                 body("practiceId", "practiceId is mandatory").exists()
             ]
                 }
+            case 'paramsId' : {
+                return [
+                    param("id", "UserId is not numeric").isInt()
+                ]
+            }
         }
     },
 
     async getPracticeDetails(req, res) {
         var PracticeId = req.params.id;
+
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
         var ptrDet = new practiceDetails.PracticeDetails();
         drillUrls =  await ptrDet.getPracticeDetails(PracticeId, true);
-
+        
         return res.json(drillUrls);
 
+    },
+
+    async getUserPractices(req, res) {
+        var userId = req.params.id;
+
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
+        var prtInfo = new practiceInfo.PracticeInfo();
+        var practices = await prtInfo.GetPracticesForUser(userId);
+
+        return res.json(practices);
     },
 
     async getPracticeDrills(req, res) {

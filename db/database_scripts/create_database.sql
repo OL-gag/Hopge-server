@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS  hpg.users (
 CREATE TABLE IF NOT EXISTS hpg.practiceInfo (
 	practice_id SERIAL PRIMARY KEY,
 	title VARCHAR(50),
-	lenght smallint NULL,
+	duration smallint NULL,
 	fullIce boolean,
 	startDtm TIMESTAMP, 
 	endDtm TIMESTAMP, 

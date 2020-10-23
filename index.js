@@ -2,7 +2,6 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 
-
 var  pat = require('./db/controlers/practice.js');
 
 var app = express();
@@ -28,12 +27,23 @@ router.get('/', function(req, res) {
 });
 
 
-//router.put('/createPractice', Practice.create);
-router.put('/createPractice', pat.Practice.validate('createPractice'), pat.Practice.createPractice ); 
+//PUT (Create) new Practice 
+router.put('/practices/practice', pat.Practice.validate('createPractice'), pat.Practice.createPractice ); 
 
-router.get('/getPracticeDrills', pat.Practice.validate('getPracticeDrills'), pat.Practice.getPracticeDrills );
-router.get('/getPracticeDetails/:id', pat.Practice.getPracticeDetails ); 
-router.get('/getDrill/:id', pat.Practice.getDrill );  
+//Get (all) Practices for a user Id
+router.get('/practices/user/:id', pat.Practice.validate('paramsId'), pat.Practice.getUserPractices)
+//GET Practice Info for PracticeId
+//router.get('/practices/infos/:id', pat.Practice.validate('paramsId'), pat.Practice.getUserPractices)
+
+//GET Practice Drills only for practiceID
+router.get('/practices/:id/drills', pat.Practice.validate('paramsId'),pat.Practice.getPracticeDetails ); 
+//GET Drill by ID (drill_id)
+router.get('/drills/:id', pat.Practice.getDrill );  
+
+//try to not use this function (Multi-call, not "REST")
+//router.get('/practices/:id/Drills', pat.Practice.validate('getPracticeDrills'), pat.Practice.getPracticeDrills );
+
+
 
 
 app.use(cors()); //permet les appels localhost (a vérifier pour PROD)

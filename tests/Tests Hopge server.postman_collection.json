@@ -32,11 +32,11 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:5253/api",
+					"raw": "{{host}}:{{port}}/api",
 					"host": [
-						"localhost"
+						"{{host}}"
 					],
-					"port": "5253",
+					"port": "{{port}}",
 					"path": [
 						"api"
 					]
@@ -80,11 +80,11 @@
 					"raw": "{\r\n    \"title\": \"New Practice #1\",\r\n    \"duration\" : 50,\r\n    \"fullIce\" : false,\r\n    \"userId\" : 1\r\n}"
 				},
 				"url": {
-					"raw": "localhost:5253/api/practices/practice",
+					"raw": "{{host}}:{{port}}/api/practices/practice",
 					"host": [
-						"localhost"
+						"{{host}}"
 					],
-					"port": "5253",
+					"port": "{{port}}",
 					"path": [
 						"api",
 						"practices",
@@ -130,11 +130,11 @@
 					"raw": "{\r\n    \"title\": \"Pratique with Exercice 6\",\r\n    \"duration\" : 40,\r\n    \"fullIce\" : false,\r\n    \"userId\" : 1,\r\n    \"startDateTime\" : \"2020-10-21 18:00:00\",\r\n    \"endDateTime\" : \"2020-10-21 19:20:00\"\r\n}"
 				},
 				"url": {
-					"raw": "localhost:5253/api/practices/practice",
+					"raw": "{{host}}:{{port}}/api/practices/practice",
 					"host": [
-						"localhost"
+						"{{host}}"
 					],
-					"port": "5253",
+					"port": "{{port}}",
 					"path": [
 						"api",
 						"practices",
@@ -181,11 +181,11 @@
 					"raw": "{\r\n    \"fullIce\" : false\r\n}"
 				},
 				"url": {
-					"raw": "localhost:5253/api/practices/practice",
+					"raw": "{{host}}:{{port}}/api/practices/practice",
 					"host": [
-						"localhost"
+						"{{host}}"
 					],
-					"port": "5253",
+					"port": "{{port}}",
 					"path": [
 						"api",
 						"practices",
@@ -234,11 +234,11 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:5253/api/drills/5",
+					"raw": "{{host}}:{{port}}/api/drills/5",
 					"host": [
-						"localhost"
+						"{{host}}"
 					],
-					"port": "5253",
+					"port": "{{port}}",
 					"path": [
 						"api",
 						"drills",
@@ -288,11 +288,11 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:5253/api/practices/user/1",
+					"raw": "{{host}}:{{port}}/api/practices/user/1",
 					"host": [
-						"localhost"
+						"{{host}}"
 					],
-					"port": "5253",
+					"port": "{{port}}",
 					"path": [
 						"api",
 						"practices",
@@ -343,11 +343,11 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:5253/api/practices/user/abc",
+					"raw": "{{host}}:{{port}}/api/practices/user/abc",
 					"host": [
-						"localhost"
+						"{{host}}"
 					],
-					"port": "5253",
+					"port": "{{port}}",
 					"path": [
 						"api",
 						"practices",
@@ -399,11 +399,11 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:5253/api/practices/user/9999",
+					"raw": "{{host}}:{{port}}/api/practices/user/9999",
 					"host": [
-						"localhost"
+						"{{host}}"
 					],
-					"port": "5253",
+					"port": "{{port}}",
 					"path": [
 						"api",
 						"practices",
@@ -454,11 +454,11 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:5253/api/practices/1/drills",
+					"raw": "{{host}}:{{port}}/api/practices/1/drills",
 					"host": [
-						"localhost"
+						"{{host}}"
 					],
-					"port": "5253",
+					"port": "{{port}}",
 					"path": [
 						"api",
 						"practices",
@@ -509,11 +509,11 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:5253/api/practices/abc/drills",
+					"raw": "{{host}}:{{port}}/api/practices/abc/drills",
 					"host": [
-						"localhost"
+						"{{host}}"
 					],
-					"port": "5253",
+					"port": "{{port}}",
 					"path": [
 						"api",
 						"practices",
@@ -565,11 +565,11 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:5253/api/practices/9999/drills",
+					"raw": "{{host}}:{{port}}/api/practices/9999/drills",
 					"host": [
-						"localhost"
+						"{{host}}"
 					],
-					"port": "5253",
+					"port": "{{port}}",
 					"path": [
 						"api",
 						"practices",

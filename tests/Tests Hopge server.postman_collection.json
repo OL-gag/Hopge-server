@@ -1,0 +1,586 @@
+{
+	"info": {
+		"_postman_id": "cfe079a8-f62e-c022-a917-e516ee054464",
+		"name": "Tests Hopge server",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Hk Server CALL",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "af95820b-d770-4269-a724-86b3e73ad576",
+						"exec": [
+							"var responseJSON;\r",
+							"\r",
+							"try { \r",
+							"    responseJSON = JSON.parse(responseBody); \r",
+							"    tests['response is valid JSON'] = true;\r",
+							"}\r",
+							"catch (e) { \r",
+							"    responseJSON = {}; \r",
+							"    tests['response is valid JSON'] = false;\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5253/api",
+					"host": [
+						"localhost"
+					],
+					"port": "5253",
+					"path": [
+						"api"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "practices/practice w/o date",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7f838508-22cf-4aa2-bae0-7f0c091bf389",
+						"exec": [
+							"var responseJSON;\r",
+							"\r",
+							"try { \r",
+							"    responseJSON = JSON.parse(responseBody); \r",
+							"    tests['response is valid JSON'] = true;\r",
+							"}\r",
+							"catch (e) { \r",
+							"    responseJSON = {}; \r",
+							"    tests['response is valid JSON'] = false;\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"New Practice #1\",\r\n    \"duration\" : 50,\r\n    \"fullIce\" : false,\r\n    \"userId\" : 1\r\n}"
+				},
+				"url": {
+					"raw": "localhost:5253/api/practices/practice",
+					"host": [
+						"localhost"
+					],
+					"port": "5253",
+					"path": [
+						"api",
+						"practices",
+						"practice"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "practices/practice all Parameters",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "86e5a967-0a3a-4ddc-b685-33754a27e335",
+						"exec": [
+							"var responseJSON;\r",
+							"\r",
+							"try { \r",
+							"    responseJSON = JSON.parse(responseBody); \r",
+							"    tests['response is valid JSON'] = true;\r",
+							"}\r",
+							"catch (e) { \r",
+							"    responseJSON = {}; \r",
+							"    tests['response is valid JSON'] = false;\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Pratique with Exercice 6\",\r\n    \"duration\" : 40,\r\n    \"fullIce\" : false,\r\n    \"userId\" : 1,\r\n    \"startDateTime\" : \"2020-10-21 18:00:00\",\r\n    \"endDateTime\" : \"2020-10-21 19:20:00\"\r\n}"
+				},
+				"url": {
+					"raw": "localhost:5253/api/practices/practice",
+					"host": [
+						"localhost"
+					],
+					"port": "5253",
+					"path": [
+						"api",
+						"practices",
+						"practice"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "practices/practice (Fail: miss params)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "db9c635a-043a-487d-b9c0-5a05cd0c1ebe",
+						"exec": [
+							"var responseJSON;\r",
+							"\r",
+							"try { \r",
+							"    responseJSON = JSON.parse(responseBody); \r",
+							"    tests['response is valid JSON'] = true;\r",
+							"    tests['return error'] = responseJSON.errors != null;\r",
+							"}\r",
+							"catch (e) { \r",
+							"    responseJSON = {}; \r",
+							"    tests['response is valid JSON'] = false;\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fullIce\" : false\r\n}"
+				},
+				"url": {
+					"raw": "localhost:5253/api/practices/practice",
+					"host": [
+						"localhost"
+					],
+					"port": "5253",
+					"path": [
+						"api",
+						"practices",
+						"practice"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "drills/id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "da443ecd-2cb6-47e5-a8d2-fde5cfed0f63",
+						"exec": [
+							"var responseJSON;\r",
+							"\r",
+							"try { \r",
+							"    responseJSON = JSON.parse(responseBody); \r",
+							"    tests['response is valid JSON'] = true;\r",
+							"}\r",
+							"catch (e) { \r",
+							"    responseJSON = {}; \r",
+							"    tests['response is valid JSON'] = false;\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"practiceId\": 100\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5253/api/drills/5",
+					"host": [
+						"localhost"
+					],
+					"port": "5253",
+					"path": [
+						"api",
+						"drills",
+						"5"
+					]
+				},
+				"description": "Return all exernices for the practice"
+			},
+			"response": []
+		},
+		{
+			"name": "practices/user/id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "aa3317e0-5d68-477b-a610-937decc25290",
+						"exec": [
+							"var responseJSON;\r",
+							"\r",
+							"try { \r",
+							"    responseJSON = JSON.parse(responseBody); \r",
+							"    tests['response is valid JSON'] = true;\r",
+							"}\r",
+							"catch (e) { \r",
+							"    responseJSON = {}; \r",
+							"    tests['response is valid JSON'] = false;\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"practiceId\": 100\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5253/api/practices/user/1",
+					"host": [
+						"localhost"
+					],
+					"port": "5253",
+					"path": [
+						"api",
+						"practices",
+						"user",
+						"1"
+					]
+				},
+				"description": "Return all exernices for the practice"
+			},
+			"response": []
+		},
+		{
+			"name": "practices/user/id (Fail: string)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "18e94730-f43b-40f9-9b1b-b05d73d71ebb",
+						"exec": [
+							"var responseJSON;\r",
+							"\r",
+							"try { \r",
+							"    responseJSON = JSON.parse(responseBody); \r",
+							"    tests['response is valid JSON'] = true;\r",
+							"}\r",
+							"catch (e) { \r",
+							"    responseJSON = {}; \r",
+							"    tests['response is valid JSON'] = false;\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"practiceId\": 100\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5253/api/practices/user/abc",
+					"host": [
+						"localhost"
+					],
+					"port": "5253",
+					"path": [
+						"api",
+						"practices",
+						"user",
+						"abc"
+					]
+				},
+				"description": "Return all exernices for the practice"
+			},
+			"response": []
+		},
+		{
+			"name": "practices/user/id (Fail: not exist)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "422beee8-9a60-460b-b66c-143a23e2bc45",
+						"exec": [
+							"var responseJSON;\r",
+							"\r",
+							"try { \r",
+							"    responseJSON = JSON.parse(responseBody); \r",
+							"    tests['response is valid JSON'] = true;\r",
+							"    tests['is empty'] = (responseJSON.practices.length == 0)\r",
+							"}\r",
+							"catch (e) { \r",
+							"    responseJSON = {}; \r",
+							"    tests['response is valid JSON'] = false;\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"practiceId\": 100\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5253/api/practices/user/9999",
+					"host": [
+						"localhost"
+					],
+					"port": "5253",
+					"path": [
+						"api",
+						"practices",
+						"user",
+						"9999"
+					]
+				},
+				"description": "Return all exernices for the practice"
+			},
+			"response": []
+		},
+		{
+			"name": "practices/id/drills",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7d9a660a-dc0e-4051-9023-6ebca9aa5e86",
+						"exec": [
+							"var responseJSON;\r",
+							"\r",
+							"try { \r",
+							"    responseJSON = JSON.parse(responseBody); \r",
+							"    tests['response is valid JSON'] = true;\r",
+							"}\r",
+							"catch (e) { \r",
+							"    responseJSON = {}; \r",
+							"    tests['response is valid JSON'] = false;\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"practiceId\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5253/api/practices/1/drills",
+					"host": [
+						"localhost"
+					],
+					"port": "5253",
+					"path": [
+						"api",
+						"practices",
+						"1",
+						"drills"
+					]
+				},
+				"description": "Return all exernices for the practice"
+			},
+			"response": []
+		},
+		{
+			"name": "practices/id/drills (Fail: string)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8cfcfc9b-54ce-4dba-9301-50e75e9a175f",
+						"exec": [
+							"var responseJSON;\r",
+							"\r",
+							"try { \r",
+							"    responseJSON = JSON.parse(responseBody); \r",
+							"    tests['response is valid JSON'] = true;\r",
+							"}\r",
+							"catch (e) { \r",
+							"    responseJSON = {}; \r",
+							"    tests['response is valid JSON'] = false;\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"practiceId\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5253/api/practices/abc/drills",
+					"host": [
+						"localhost"
+					],
+					"port": "5253",
+					"path": [
+						"api",
+						"practices",
+						"abc",
+						"drills"
+					]
+				},
+				"description": "Return all exernices for the practice"
+			},
+			"response": []
+		},
+		{
+			"name": "practices/id/drills (Fail: not exist)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c3318a50-b1fc-42f6-8fef-69bd9be93d09",
+						"exec": [
+							"var responseJSON;\r",
+							"\r",
+							"try { \r",
+							"    responseJSON = JSON.parse(responseBody); \r",
+							"    tests['response is valid JSON'] = true;\r",
+							"    tests['is empty'] = (responseJSON.drillUrls.length == 0)\r",
+							"}\r",
+							"catch (e) { \r",
+							"    responseJSON = {}; \r",
+							"    tests['response is valid JSON'] = false;\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"practiceId\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5253/api/practices/9999/drills",
+					"host": [
+						"localhost"
+					],
+					"port": "5253",
+					"path": [
+						"api",
+						"practices",
+						"9999",
+						"drills"
+					]
+				},
+				"description": "Return all exernices for the practice"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

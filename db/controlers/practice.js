@@ -19,7 +19,7 @@ const Practice =
 
         const {
             title,
-            length,
+            duration,
             fullIce,
             startDateTime,
             endDateTime,
@@ -31,14 +31,14 @@ const Practice =
 
         
         var prtInfo = new practiceInfo.PracticeInfo();
-        var result =  await prtInfo.CreatePracticeInfo(title,length,fullIce,userId, startDateTime, endDateTime);
+        var result =  await prtInfo.CreatePracticeInfo(title,duration,fullIce,userId, startDateTime, endDateTime);
         if ( result.length == 0)
         {
             return res.status(400).json({ errors: "Unable to create new practice" });
         }        
         var practiceId = result[0].practice_id;
         //selectDrills(result[0].practice_id, lenght);
-        SelectDrillsF(length, practiceId);
+        SelectDrillsF(duration, practiceId);
           
         //console.log("Drills : ", this.drillsArray);
         res.status(200).json(result[0]);
@@ -50,7 +50,7 @@ const Practice =
             case 'createPractice': {
             return [ 
                 body("title", "title doesn't exists").exists(),
-                body("length", "Practice Length is mandatory").exists(),
+                body("duration", "Practice duration is mandatory").exists(),
                 body("userId", "UserId is mandatory").exists()
             ]   
             }
@@ -78,7 +78,7 @@ const Practice =
         var ptrDet = new practiceDetails.PracticeDetails();
         drillUrls =  await ptrDet.getPracticeDetails(PracticeId, true);
         
-        return res.json(drillUrls);
+        return res.json({drillUrls});
 
     },
 
@@ -93,7 +93,7 @@ const Practice =
         var prtInfo = new practiceInfo.PracticeInfo();
         var practices = await prtInfo.GetPracticesForUser(userId);
 
-        return res.json(practices);
+        return res.json({"practices" : practices });
     },
 
     async getPracticeDrills(req, res) {
@@ -112,9 +112,9 @@ const Practice =
                 throw "Unable to find new practice";
             }
             var exer = new drills.Drills();
-            exer.getListDrills(lstDrillId).then(lstDrillsDet =>
+            exer.getListDrills(lstDrillId).then(drillUrls =>
                 {
-                    res.json(lstDrillsDet);
+                    res.json({drillUrls});
                 })         
         }).catch(errors => res.status(400).json({errors}));       
     },
@@ -124,8 +124,8 @@ const Practice =
         var id = req.params.id;
         if ( id > 0)
         {
-            drillDetails = await exer.getDrill(id);
-            res.json(drillDetails);
+            drill = await exer.getDrill(id);
+            res.json({drill});
         }
         else
         {
@@ -139,10 +139,10 @@ module.exports = {
     Practice
   };
 
-function SelectDrillsF(lenght, practiceId) {
-    console.log("***  selectDrills **", lenght);
+function SelectDrillsF(duration, practiceId) {
+    console.log("***  selectDrills **", duration);
     const minPerDrill = 10;
-    const nbDrills = Math.floor(lenght / minPerDrill);
+    const nbDrills = Math.floor(duration / minPerDrill);
     console.log("***  nbDrills **", nbDrills);
     var exer = new drills.Drills();
     exer.getAllDrills().then((value) => {

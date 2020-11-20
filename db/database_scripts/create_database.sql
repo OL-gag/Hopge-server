@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS hpg.practiceInfo (
 	startDtm TIMESTAMP, 
 	endDtm TIMESTAMP, 
 	creationDtm TIMESTAMP,
+	skills VARCHAR(150)
 	user_id SERIAL REFERENCES hpg.users(user_id)
 );
 

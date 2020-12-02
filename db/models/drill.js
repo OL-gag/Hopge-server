@@ -1,11 +1,35 @@
 const e = require('express');
 var db = require('../dev/dbQuery.js');
 
+
 class Drills
 {
     constructor(){
         
     };
+
+    async createDrill(titreFr, titreEng, descriptionFr, descriptionEng, picture, skills, version)
+    {
+
+        const text = `
+        INSERT INTO hpg.drills (drill_name_fr, drill_name_eng, drill_description_fr, drill_description_eng, drill_picture, drill_skills)
+        VALUES ($1, $2, $3, $4, $5, $6)  RETURNING drill_id;
+        `;
+
+        const values = [
+            titreFr,
+            titreEng,
+            descriptionFr,
+            descriptionEng,
+            picture,
+            skills
+        ];
+        
+        const { rows } = await db.query(text,values);
+
+        return rows;
+  
+    }
 
     async getDrill(id)
     {

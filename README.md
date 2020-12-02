@@ -12,6 +12,7 @@ Hopge-server is a node.js application to generate hockey practices. REST API all
 
 # Endpoints
     PUT /api/practices/practice
+    PUT /api/drills/drill
     GET /api/practices/user/:id
     GET /api/practices/:id/drills
     GET /drills/:id

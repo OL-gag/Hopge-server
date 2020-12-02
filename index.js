@@ -2,7 +2,8 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 
-var  pat = require('./db/controlers/practice.js');
+var  practiceControler = require('./db/controlers/practice.js');
+var  drillControler = require('./db/controlers/drill.js');
 
 var app = express();
 
@@ -11,7 +12,9 @@ var app = express();
    app.use(bodyParser.urlencoded({
     extended: true
 }));
-app.use(bodyParser.json());
+//app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '10mb', extended: true}))
+app.use(bodyParser.urlencoded({limit: '10mb', extended: true}))
 
 //app.use(expressValidator());
 // Use environment defined port or 3000
@@ -28,18 +31,19 @@ router.get('/', function(req, res) {
 
 
 //PUT (Create) new Practice 
-router.put('/practices/practice', pat.Practice.validate('createPractice'), pat.Practice.createPractice ); 
+router.put('/practices/practice', practiceControler.Practice.validate('createPractice'), practiceControler.Practice.createPractice ); 
 
 //Get (all) Practices for a user Id
-router.get('/practices/user/:id', pat.Practice.validate('paramsId'), pat.Practice.getUserPractices)
+router.get('/practices/user/:id', practiceControler.Practice.validate('paramsId'), practiceControler.Practice.getUserPractices)
 //GET Practice Info for PracticeId
 //router.get('/practices/infos/:id', pat.Practice.validate('paramsId'), pat.Practice.getUserPractices)
 
 //GET Practice Drills only for practiceID
-router.get('/practices/:id/drills', pat.Practice.validate('paramsId'),pat.Practice.getPracticeDetails ); 
+router.get('/practices/:id/drills', practiceControler.Practice.validate('paramsId'),practiceControler.Practice.getPracticeDetails ); 
 //GET Drill by ID (drill_id)
-router.get('/drills/:id', pat.Practice.getDrill );  
+router.get('/drills/:id', practiceControler.Practice.getDrill );  
 
+router.put('/drills/drill', drillControler.Drill.validate('createDrill'), drillControler.Drill.createDrill);
 //try to not use this function (Multi-call, not "REST")
 //router.get('/practices/:id/Drills', pat.Practice.validate('getPracticeDrills'), pat.Practice.getPracticeDrills );
 

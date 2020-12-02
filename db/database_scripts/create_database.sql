@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS hpg.drills
 	drill_name_fr varchar(75),
 	drill_name_eng varchar(75),
 	drill_description_fr varchar(2000),
-	drill_descrription_eng varchar(2000),
+	drill_description_eng varchar(2000),
 	drill_note varchar(2000),
 	drill_picture BYTEA,
 	drill_skills varchar(200)

@@ -1,6 +1,8 @@
 const { body, param, validationResult } = require('express-validator');
+const fs = require('fs');
 const drill = require('../models/drill.js');
-var drills = require('../models/drill.js');
+var dotenv = require('dotenv');
+
 
 const Drill = 
 {
@@ -27,9 +29,11 @@ const Drill =
         var result =  await newDrill.createDrill(titleFr,titleEng,descriptionFr,descriptionEng,picture, skills, version);
         if ( result.length == 0)
         {
+            
             return res.status(400).json({ errors: "Unable to create new drill" });
-        }                
 
+        }                
+        saveToFile(titleFr, req.body);
         res.status(200).json(result[0]);
     },
 
@@ -47,8 +51,18 @@ const Drill =
             }          
         }
     },
+
+   
 }
 
+function saveToFile(title, req)
+{
+  dotenv.config();
+
+  title =  process.env.FOLDER_SAVE + title + Date.now() + ".json"
+  let data = JSON.stringify(req, null,1);
+  fs.writeFileSync(title, data);
+}
 
 module.exports = {
     Drill

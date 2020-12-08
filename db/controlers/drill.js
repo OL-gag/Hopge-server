@@ -59,7 +59,8 @@ function saveToFile(title, req)
 {
   dotenv.config();
 
-  title =  process.env.FOLDER_SAVE + title + Date.now() + ".json"
+  title =  process.env.FOLDER_SAVE + title + Date.now() + ".json";
+  title = title.replace(/\s+/g, '');
   let data = JSON.stringify(req, null,1);
   fs.writeFileSync(title, data);
 }

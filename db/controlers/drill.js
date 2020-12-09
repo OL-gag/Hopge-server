@@ -22,11 +22,12 @@ const Drill =
             descriptionEng,
             picture,
             skills,
+            fullIce,
             version    
             } = req.body;
 
         var newDrill = new drill.Drills();
-        var result =  await newDrill.createDrill(titleFr,titleEng,descriptionFr,descriptionEng,picture, skills, version);
+        var result =  await newDrill.createDrill(titleFr,titleEng,descriptionFr,descriptionEng,picture,skills,fullIce,version);
         if ( result.length == 0)
         {
             

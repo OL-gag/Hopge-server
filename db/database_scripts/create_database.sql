@@ -38,7 +38,9 @@ CREATE TABLE IF NOT EXISTS hpg.drills
 	drill_description_eng varchar(2000),
 	drill_note varchar(2000),
 	drill_picture BYTEA,
-	drill_skills varchar(200)
+	drill_skills varchar(200),
+	drill_full_ice boolean,
+	drill_version varchar(10)
 );
 
 CREATE TABLE IF NOT EXISTS hpg.practiceDetails (

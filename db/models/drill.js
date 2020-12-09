@@ -8,21 +8,23 @@ class Drills
         
     };
 
-    async createDrill(titreFr, titreEng, descriptionFr, descriptionEng, picture, skills, version)
+    async createDrill(titleFr,titleEng,descriptionFr,descriptionEng,picture,skills,fullIce,version)
     {
 
         const text = `
-        INSERT INTO hpg.drills (drill_name_fr, drill_name_eng, drill_description_fr, drill_description_eng, drill_picture, drill_skills)
-        VALUES ($1, $2, $3, $4, $5, $6)  RETURNING drill_id;
+        INSERT INTO hpg.drills (drill_name_fr, drill_name_eng, drill_description_fr, drill_description_eng, drill_picture, drill_skills, drill_full_ice, drill_version)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)  RETURNING drill_id;
         `;
 
         const values = [
-            titreFr,
-            titreEng,
+            titleFr,
+            titleEng,
             descriptionFr,
             descriptionEng,
             picture,
-            skills
+            skills,
+            fullIce,
+            version
         ];
         
         const { rows } = await db.query(text,values);

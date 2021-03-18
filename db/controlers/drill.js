@@ -14,6 +14,8 @@ const Drill =
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
         }
+ 
+
 
         const {
             titleFr,
@@ -25,7 +27,7 @@ const Drill =
             fullIce,
             version    
             } = req.body;
-
+            console.log("*** drill.js - bfore createDrill **");        
         var newDrill = new drill.Drills();
         var result =  await newDrill.createDrill(titleFr,titleEng,descriptionFr,descriptionEng,picture,skills,fullIce,version);
         if ( result.length == 0)
@@ -33,7 +35,8 @@ const Drill =
             
             return res.status(400).json({ errors: "Unable to create new drill" });
 
-        }                
+        }    
+        console.log("*** drill.js - before SaveToFile **");                
         saveToFile(titleFr, req.body);
         res.status(200).json(result[0]);
     },

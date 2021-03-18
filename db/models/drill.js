@@ -15,7 +15,7 @@ class Drills
         INSERT INTO hpg.drills (drill_name_fr, drill_name_eng, drill_description_fr, drill_description_eng, drill_picture, drill_skills, drill_full_ice, drill_version)
         VALUES ($1, $2, $3, $4, $5, $6, $7, $8)  RETURNING drill_id;
         `;
-
+        console.log("*** drill.js - IN before values **");  
         const values = [
             titleFr,
             titleEng,
@@ -26,9 +26,9 @@ class Drills
             fullIce,
             version
         ];
-        
+        console.log("*** drill.js - IN before query createDrill **");    
         const { rows } = await db.query(text,values);
-
+        console.log("*** drill.js - IN after query createDrill **" + text + " -- " + values);  
         return rows;
   
     }
@@ -36,7 +36,7 @@ class Drills
     async getDrill(id)
     {
         var text = `
-            SELECT * FROM hpg.drills
+            SELECT *, encode(drill_picture, 'base64') as drill_picture_64 FROM hpg.drills
             WHERE drill_id = $1;
             `;
        

@@ -36,7 +36,7 @@ class Drills
     async getDrill(id)
     {
         var text = `
-            SELECT * FROM hpg.drills
+            SELECT *, encode(drill_picture, 'base64') as drill_picture_64 FROM hpg.drills
             WHERE drill_id = $1;
             `;
        

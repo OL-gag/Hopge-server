@@ -15,8 +15,6 @@ const Drill =
             return res.status(400).json({ errors: errors.array() });
         }
  
-
-
         const {
             titleFr,
             titleEng,

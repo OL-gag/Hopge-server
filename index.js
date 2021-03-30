@@ -36,7 +36,7 @@ router.put('/practices/practice', practiceControler.Practice.validate('createPra
 //Get (all) Practices for a user Id
 router.get('/practices/user/:id', practiceControler.Practice.validate('paramsId'), practiceControler.Practice.getUserPractices)
 //GET Practice Info for PracticeId
-//router.get('/practices/infos/:id', pat.Practice.validate('paramsId'), pat.Practice.getUserPractices)
+router.get('/practices/:id/info', practiceControler.Practice.validate('paramsId'), practiceControler.Practice.getPracticeInfo)
 
 //GET Practice Drills only for practiceID
 router.get('/practices/:id/drills', practiceControler.Practice.validate('paramsId'),practiceControler.Practice.getPracticeDetails ); 

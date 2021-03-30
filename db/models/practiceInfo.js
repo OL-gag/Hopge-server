@@ -71,6 +71,23 @@ class PracticeInfo
 
         return rows;
      }
+
+     async getPracticeInfo(practiceId)
+     {
+          const text = `
+                SELECT * FROM hpg.practiceinfo WHERE practice_id = $1;
+            `;
+
+        const values = [
+            practiceId
+        ];
+        
+        const { rows } = await db.query(text,values);
+
+        return rows;
+     }
+     
+
 }
 
 module.exports = {

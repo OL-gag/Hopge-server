@@ -83,6 +83,23 @@ const Practice =
 
     },
 
+    async getPracticeInfo(req, res) {
+        var PracticeId = req.params.id;
+
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
+        var prtInfo = new practiceInfo.PracticeInfo();
+        practiceDet =  await prtInfo.getPracticeInfo(PracticeId);
+        
+        return res.json({practiceDet});
+
+    },
+
+    
+
     async getUserPractices(req, res) {
         var userId = req.params.id;
 

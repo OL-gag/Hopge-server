@@ -3,7 +3,7 @@
 module.exports.generateUniqueNumbers = function(nb, maxLimit)
 {
     let col = [];
-    if ( nb < maxLimit )
+    if ( nb <= maxLimit )
     {
         while (col.length < nb) { 
             let noExercices = Math.ceil(Math.random() * maxLimit);

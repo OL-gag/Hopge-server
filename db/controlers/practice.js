@@ -92,9 +92,9 @@ const Practice =
         }
 
         var prtInfo = new practiceInfo.PracticeInfo();
-        practiceDet =  await prtInfo.getPracticeInfo(PracticeId);
+        informations =  await prtInfo.getPracticeInfo(PracticeId);
         
-        return res.json({practiceDet});
+        return res.json({informations});
 
     },
 

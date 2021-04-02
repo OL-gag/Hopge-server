@@ -82,7 +82,7 @@ class Drills
        
         
         const { rows } = await db.query(text);
-        console.log("*** models/drills.js - result **", rows);
+        console.log("*** models/drills.js - result **", rows.length);
         return rows;
 
 
@@ -109,7 +109,7 @@ class Drills
         const values = existingdrill;
         
         const { rows } = await db.query(text,values);
-        console.log("*** models/drills.js - result **", rows);
+        console.log("*** models/drills.js - result **", rows.length);
         return rows;
     };
 

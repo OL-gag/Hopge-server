@@ -43,24 +43,27 @@ class PracticeDetails
     
     async insert(practiceId, listNoExerciceId)
     { 
-        let j = 0;
-        var insertClause = 'Insert INTO hpg.practiceDetails (practice_id, drill_id) VALUES ';
-        var values = [];
-        for(let i = 0; i <= listNoExerciceId.length-1; i++)
+        if ( listNoExerciceId.length > 0)
         {
-            insertClause += '($' + ++j + ', $'+ ++j + ')';
-            if ( i != listNoExerciceId.length-1)
+            let j = 0;
+            var insertClause = 'Insert INTO hpg.practiceDetails (practice_id, drill_id) VALUES ';
+            var values = [];
+            for(let i = 0; i <= listNoExerciceId.length-1; i++)
             {
-                insertClause += ', '
+                insertClause += '($' + ++j + ', $'+ ++j + ')';
+                if ( i != listNoExerciceId.length-1)
+                {
+                    insertClause += ', '
+                }
+                values.push(practiceId);
+                values.push(listNoExerciceId[i]);
             }
-            values.push(practiceId);
-            values.push(listNoExerciceId[i]);
-        }
-        insertClause += ';';
+            insertClause += ';';
 
-        
-        console.log(insertClause);
-        await db.query(insertClause,values);
+            
+            console.log(insertClause);
+            await db.query(insertClause,values);
+        }
         /*
         { text:
             'INSERT INTO "users" ("email", "name") VALUES ($1, $2), ($3, $4) RETURNING "id"',

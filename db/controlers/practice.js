@@ -23,6 +23,8 @@ const Practice =
             fullIce,
             startDateTime,
             endDateTime,
+            location,
+            note,
             userId,
             skills    
             } = req.body;
@@ -32,7 +34,7 @@ const Practice =
 
         
         var prtInfo = new practiceInfo.PracticeInfo();
-        var result =  await prtInfo.CreatePracticeInfo(title,duration,fullIce,userId, startDateTime, endDateTime, skills);
+        var result =  await prtInfo.CreatePracticeInfo(title,duration,fullIce,userId, startDateTime, endDateTime, location, note, skills);
         if ( result.length == 0)
         {
             return res.status(400).json({ errors: "Unable to create new practice" });

@@ -6,7 +6,7 @@ class PracticeInfo
         this.practice_id = -1;
     };
 
-    async CreatePracticeInfo(title, duration, fullice, userId, startDateTime , endDateTime, skills)
+    async CreatePracticeInfo(title, duration, fullice, userId, startDateTime , endDateTime, field, note, skills)
     {
         console.log("*** models/praticeInfo.js - CreatePracticeInfo function **");
         let ts = Date.now();
@@ -23,8 +23,8 @@ class PracticeInfo
         }
 
         const text = `
-            INSERT INTO hpg.practiceinfo (title, duration, fullice, user_id, startDtm, endDtm, creationDtm, skills)
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8)  RETURNING practice_id;
+            INSERT INTO hpg.practiceinfo (title, duration, fullice, user_id, startDtm, endDtm, creationDtm, field, note, skills)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)  RETURNING practice_id;
             `;
 
         const values = [
@@ -35,6 +35,8 @@ class PracticeInfo
             startDateTime,
             endDateTime,
             new Date(Date.now()),
+            field,
+            note,
             skills
         ];
         

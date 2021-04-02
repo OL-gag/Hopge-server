@@ -4,7 +4,7 @@ exports.query = function(quertText, params) {
     return new Promise((resolve, reject) => {
          pool.query(quertText, params)
         .then((res) => {
-          console.log("Query : ", res);
+          //console.log("Query : ", res);
           resolve(res);
           
         })

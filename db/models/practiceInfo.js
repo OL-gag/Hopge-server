@@ -60,7 +60,7 @@ class PracticeInfo
      async GetPracticesForUser(userId)
      {
           const text = `
-                SELECT * FROM hpg.practiceinfo WHERE user_id = $1;
+                SELECT * FROM hpg.practiceinfo WHERE user_id = $1 ORDER by startdtm DESC;
             `;
 
         const values = [

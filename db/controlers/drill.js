@@ -54,6 +54,23 @@ const Drill =
         }
     },
 
+    async getDrillsUrl(req, res) {
+
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
+        var modDrill = new drill.Drills();
+        var drills =  await modDrill.getAllDrillsId();
+        if ( drills.length == 0)
+        {            
+            return res.status(400).json({ errors: "Unable to create new drill" });
+        }    
+       
+        res.status(200).json({drills});
+    },
+
    
 }
 

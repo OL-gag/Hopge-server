@@ -42,8 +42,11 @@ router.get('/practices/:id/info', practiceControler.Practice.validate('paramsId'
 router.get('/practices/:id/drills', practiceControler.Practice.validate('paramsId'),practiceControler.Practice.getPracticeDetails ); 
 //GET Drill by ID (drill_id)
 router.get('/drills/:id', practiceControler.Practice.getDrill );  
-
+//PUT Create Drills
 router.put('/drills/drill', drillControler.Drill.validate('createDrill'), drillControler.Drill.createDrill);
+//GET Get all drills
+router.get('/drills/', drillControler.Drill.getDrillsUrl);
+
 //try to not use this function (Multi-call, not "REST")
 //router.get('/practices/:id/Drills', pat.Practice.validate('getPracticeDrills'), pat.Practice.getPracticeDrills );
 

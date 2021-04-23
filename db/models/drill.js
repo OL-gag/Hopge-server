@@ -72,12 +72,12 @@ class Drills
         return rows;
     }
 
-    async getAllDrills()
+    async getAllDrillsId()
     {
         console.log("*** models/drills.js - getdrills function **");
         
         var text = `
-            SELECT * FROM hpg.drills ORDER BY drill_id;
+            SELECT drill_id FROM hpg.drills ORDER BY drill_id;
             `;
        
         
